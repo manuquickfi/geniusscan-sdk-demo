@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using UIKit;
 using Foundation;
-using Com.GeniusScanSDK.ScanFlow;
+using GeniusScanSDK.ScanFlow;
 
 // Register ScanFlow into Xamarin.Forms's Dependency Service
 [assembly: Xamarin.Forms.Dependency(typeof(SimpleDemo.Forms.iOS.ScanFlow))]
@@ -11,7 +11,16 @@ namespace SimpleDemo.Forms.iOS
     public class ScanFlow : IScanFlow
     {
         private GSKScanFlow scanFlow;
-        private TaskCompletionSource<string> taskCompletionSource;
+
+        public Task Init(string licenseKey)
+        {
+            var taskCompletionSource = new TaskCompletionSource<bool>();
+            GSK.InitWithLicenseKey(licenseKey, (NSError error) => {
+                taskCompletionSource.TrySetException(new NSErrorException(error));
+            });
+            taskCompletionSource.TrySetResult(true);
+            return taskCompletionSource.Task;
+        }
 
         public Task<string> StartScanning()
         {
@@ -31,7 +40,7 @@ namespace SimpleDemo.Forms.iOS
 
         private Task<string> StartScanning(NSDictionary configurationDictionary)
         {
-            taskCompletionSource = new TaskCompletionSource<string>();
+            var taskCompletionSource = new TaskCompletionSource<string>();
             var outError = new NSError();
 
             var configuration = GSKScanFlowConfiguration_Dictionary.ConfigurationWithDictionary(new GSKScanFlowConfiguration(), configurationDictionary, out outError);

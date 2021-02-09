@@ -59,10 +59,7 @@
       <Version>2.8.5</Version>
     </PackageReference>
     <PackageReference Include="GeniusScanSDK.ScanFlow.Android">
-      <Version>1.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="GeniusScanSDK.Core.Android">
-      <Version>1.0.3</Version>
+      <Version>1.0.5</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -109,14 +106,6 @@
       <Project>{26208678-EE18-4A15-BB95-5C1DC2BFBD77}</Project>
       <Name>SimpleDemo.Forms</Name>
     </ProjectReference>
-    <!-- <ProjectReference Include="..\..\GeniusScanSDK.Core.Android\GeniusScanSDK.Core.Android.csproj">
-      <Project>{CE3EFF06-F399-4540-99F0-AF54C1ADFBC2}</Project>
-      <Name>GeniusScanSDK.Core.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GeniusScanSDK.ScanFlow.Android\GeniusScanSDK.ScanFlow.Android.csproj">
-      <Project>{C8518039-86C2-4310-B89B-8B5EF42A6614}</Project>
-      <Name>GeniusScanSDK.ScanFlow.Android</Name>
-    </ProjectReference> -->
   </ItemGroup>
  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

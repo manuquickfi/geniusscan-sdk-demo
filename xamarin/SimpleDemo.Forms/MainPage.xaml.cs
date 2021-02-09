@@ -1,16 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using System.Text.Json;
 
 namespace SimpleDemo.Forms
 {
     public partial class MainPage : ContentPage
     {
+        readonly IScanFlow scanFlow = DependencyService.Get<IScanFlow>();
+
         public MainPage()
         {
             InitializeComponent();
+            try
+            {
+                scanFlow.Init("REPLACE WITH YOUR LICENSE");
+            } catch (Exception e)
+            {
+                Console.WriteLine("Error initialising Genius Scan SDK: " + e.Message);
+            }
         }
 
         async void StartScanning(object sender, EventArgs args)
@@ -22,7 +29,6 @@ namespace SimpleDemo.Forms
             //configuration["pdfMaxScanDimension"] = 2000;
             //configuration["postProcessingActions"] = new String[] { "rotate", "editFilter" };
             
-            IScanFlow scanFlow = DependencyService.Get<IScanFlow>();
             try
             {
                 var pdfUrl = await scanFlow.StartScanning();

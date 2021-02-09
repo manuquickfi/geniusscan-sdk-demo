@@ -7,7 +7,7 @@ using Android.Runtime;
 using Android.OS;
 using Xamarin.Forms.Platform.Android;
 using System.Threading.Tasks;
-using Com.Geniusscansdk.Scanflow;
+using GeniusScanSDK.Scanflow;
 using System.Collections.Generic;
 using GoogleGson;
 
@@ -32,6 +32,7 @@ namespace SimpleDemo.Forms.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
         }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -39,10 +40,24 @@ namespace SimpleDemo.Forms.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
+        public Task Init(string licenseKey)
+        {
+            try
+            {
+                ScanFlow.Init(Xamarin.Essentials.Platform.CurrentActivity, licenseKey);
+                return Task.FromResult(true);
+            } catch (Exception e)
+            {
+                return Task.FromException(e);
+            }
+        }
+
         public Task<string> StartScanning()
         {
-            var configuration = new Dictionary<string, Java.Lang.Object>();
-            configuration.Add("source", "camera");
+            var configuration = new Dictionary<string, Java.Lang.Object>
+            {
+                { "source", "camera" }
+            };
             return StartScanning(configuration);
         }
 
